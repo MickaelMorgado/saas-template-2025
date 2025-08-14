@@ -22,8 +22,7 @@ export default async function RootLayout({
 			<body className={font.className}>
 				<ThemeProvider
 					attribute="class"
-					defaultTheme="light"
-					enableSystem
+					defaultTheme="dark"
 					disableTransitionOnChange>
 					<SupabaseProvider>
 						<UserProvider>{children}</UserProvider>

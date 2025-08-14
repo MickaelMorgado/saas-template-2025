@@ -3,6 +3,15 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
+import {
+  Pencil,
+  Trash,
+  Save,
+  XCircle,
+  PlusCircle,
+} from "lucide-react";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/../types_db";
 
 type User = {
   id: string;
@@ -142,117 +151,121 @@ const DashboardPage = () => {
   }
 
   return (
-    <main className="p-8 max-w-5xl mx-auto">
+    <main className="p-8">
       <h1 className="text-3xl font-bold mb-6">User Management</h1>
 
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
       )}
 
-      <section className="mb-8">
-        <h2 className="text-xl font-semibold mb-2">Create New User</h2>
+      {/* User Management Section */}
+      <section className="mb-8 p-6 bg-card border rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Create New User</h2>
         <div className="flex flex-col sm:flex-row gap-4">
           <input
             type="email"
             placeholder="Email"
-            className="border p-2 rounded flex-grow"
+            className="border border-input bg-transparent px-4 py-2 rounded-md flex-grow"
             value={newUserEmail}
             onChange={(e) => setNewUserEmail(e.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="border p-2 rounded flex-grow"
+            className="border border-input bg-transparent px-4 py-2 rounded-md flex-grow"
             value={newUserPassword}
             onChange={(e) => setNewUserPassword(e.target.value)}
           />
           <button
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="bg-primary text-primary-foreground px-4 py-2 rounded-md hover:bg-primary/90 transition-colors flex items-center"
             onClick={handleCreateUser}
             disabled={loading}
           >
+            <PlusCircle className="mr-2 h-5 w-5" />
             Create
           </button>
         </div>
       </section>
 
-      <section>
-        <h2 className="text-xl font-semibold mb-2">Users</h2>
+      <section className="p-6 bg-card border rounded-lg">
+        <h2 className="text-xl font-semibold mb-4">Users</h2>
         {loading ? (
           <p>Loading users...</p>
         ) : (
-          <table className="w-full border-collapse border border-gray-300">
-            <thead>
-              <tr className="bg-gray-100">
-                <th className="border border-gray-300 p-2 text-left">Email</th>
-                <th className="border border-gray-300 p-2 text-left">Created At</th>
-                <th className="border border-gray-300 p-2 text-left">Last Sign In</th>
-                <th className="border border-gray-300 p-2 text-left">Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {users.map((user) =>
-                editingUser && editingUser.id === user.id ? (
-                  <tr key={user.id}>
-                    <td className="border border-gray-300 p-2">
-                      <input
-                        type="email"
-                        value={editingUser.email || ""}
-                        onChange={(e) =>
-                          setEditingUser({ ...editingUser, email: e.target.value })
-                        }
-                        className="border p-1 rounded w-full"
-                      />
-                    </td>
-                    <td className="border border-gray-300 p-2">{user.created_at}</td>
-                    <td className="border border-gray-300 p-2">
-                      {user.last_sign_in_at || "Never"}
-                    </td>
-                    <td className="border border-gray-300 p-2 space-x-2">
-                      <button
-                        className="bg-green-600 text-white px-2 py-1 rounded hover:bg-green-700"
-                        onClick={handleSaveEdit}
-                        disabled={loading}
-                      >
-                        Save
-                      </button>
-                      <button
-                        className="bg-gray-400 text-white px-2 py-1 rounded hover:bg-gray-500"
-                        onClick={handleCancelEdit}
-                        disabled={loading}
-                      >
-                        Cancel
-                      </button>
-                    </td>
-                  </tr>
-                ) : (
-                  <tr key={user.id}>
-                    <td className="border border-gray-300 p-2">{user.email}</td>
-                    <td className="border border-gray-300 p-2">{user.created_at}</td>
-                    <td className="border border-gray-300 p-2">
-                      {user.last_sign_in_at || "Never"}
-                    </td>
-                    <td className="border border-gray-300 p-2 space-x-2">
-                      <button
-                        className="bg-yellow-600 text-white px-2 py-1 rounded hover:bg-yellow-700"
-                        onClick={() => handleEditUser(user)}
-                        disabled={loading}
-                      >
-                        Edit
-                      </button>
-                      <button
-                        className="bg-red-600 text-white px-2 py-1 rounded hover:bg-red-700"
-                        onClick={() => handleDeleteUser(user.id)}
-                        disabled={loading}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                )
-              )}
-            </tbody>
-          </table>
+          <div className="overflow-x-auto">
+            <table className="w-full text-sm text-left">
+              <thead className="text-xs text-muted-foreground uppercase bg-muted">
+                <tr>
+                  <th scope="col" className="px-6 py-3">Email</th>
+                  <th scope="col" className="px-6 py-3">Created At</th>
+                  <th scope="col" className="px-6 py-3">Last Sign In</th>
+                  <th scope="col" className="px-6 py-3 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {users.map((user) =>
+                  editingUser && editingUser.id === user.id ? (
+                    <tr key={user.id} className="border-b">
+                      <td className="px-6 py-4">
+                        <input
+                          type="email"
+                          value={editingUser.email || ""}
+                          onChange={(e) =>
+                            setEditingUser({ ...editingUser, email: e.target.value })
+                          }
+                          className="border border-input bg-transparent px-2 py-1 rounded-md w-full"
+                        />
+                      </td>
+                      <td className="px-6 py-4">{new Date(user.created_at).toLocaleDateString()}</td>
+                      <td className="px-6 py-4">
+                        {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : "Never"}
+                      </td>
+                      <td className="px-6 py-4 text-right space-x-2">
+                        <button
+                          className="text-primary p-1 rounded-md hover:bg-primary/10 transition-colors"
+                          onClick={handleSaveEdit}
+                          disabled={loading}
+                        >
+                          <Save className="h-5 w-5" />
+                        </button>
+                        <button
+                          className="text-muted-foreground p-1 rounded-md hover:bg-muted/90 transition-colors"
+                          onClick={handleCancelEdit}
+                          disabled={loading}
+                        >
+                          <XCircle className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  ) : (
+                    <tr key={user.id} className="border-b">
+                      <td className="px-6 py-4 font-medium text-foreground">{user.email}</td>
+                      <td className="px-6 py-4">{new Date(user.created_at).toLocaleDateString()}</td>
+                      <td className="px-6 py-4">
+                        {user.last_sign_in_at ? new Date(user.last_sign_in_at).toLocaleDateString() : "Never"}
+                      </td>
+                      <td className="px-6 py-4 text-right space-x-2">
+                        <button
+                          className="text-secondary-foreground p-1 rounded-md hover:bg-secondary/10 transition-colors"
+                          onClick={() => handleEditUser(user)}
+                          disabled={loading}
+                        >
+                          <Pencil className="h-5 w-5" />
+                        </button>
+                        <button
+                          className="text-destructive p-1 rounded-md hover:bg-destructive/10 transition-colors"
+                          onClick={() => handleDeleteUser(user.id)}
+                          disabled={loading}
+                        >
+                          <Trash className="h-5 w-5" />
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+            </table>
+          </div>
         )}
       </section>
     </main>

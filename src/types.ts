@@ -39,7 +39,7 @@ export interface ProductWithPrice extends Product {
 }
 
 export interface Subscription {
-    id: string;
+    id:string;
     user_id: string;
     status?: Stripe.Subscription.Status;
     metadata?: Stripe.Metadata;
@@ -55,4 +55,23 @@ export interface Subscription {
     trial_start?: string;
     trial_end?: string;
     prices?: Price;
+}
+
+export interface Lead {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  company?: string;
+  message?: string;
+}
+
+export interface HomepageSection {
+  id: number;
+  title: string;
+  order: number;
+  content?: string;
+  image_url?: string;
+  cta_text?: string;
+  cta_url?: string;
 }

@@ -1,0 +1,8 @@
+id,product_id,active,description,unit_amount,currency,type,interval,interval_count,trial_period_days,metadata
+price_1,prod_1,true,"Basic Monthly",1000,usd,recurring,month,1,,"{}"
+price_2,prod_1,true,"Basic Yearly",10000,usd,recurring,year,1,,"{}"
+price_3,prod_2,true,"Pro Monthly",2500,usd,recurring,month,1,14,"{}"
+price_4,prod_2,true,"Pro Yearly",25000,usd,recurring,year,1,14,"{}"
+price_5,prod_3,true,"Ultimate Monthly",5000,usd,recurring,month,1,,"{}"
+price_6,prod_3,true,"Ultimate Yearly",50000,usd,recurring,year,1,,"{}"
+price_7,prod_4,false,"Legacy Monthly",500,usd,recurring,month,1,,"{}"
