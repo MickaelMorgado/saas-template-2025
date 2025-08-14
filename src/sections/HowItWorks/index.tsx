@@ -17,34 +17,38 @@ const data = [
 
 const HowItWorks: React.FC = ({}) => {
 	return (
-		<div className="flex flex-col items-center justify-start gap-16 min-h-[70vh] text-center">
+		<div className="flex flex-col items-center justify-start gap-16 min-h-[70vh] text-center py-12">
 			<div className="flex flex-col items-center justify-center gap-2">
 				<p className="font-semibold uppercase text-primary">How it works?</p>
 				<h1 className="text-[40px] font-semibold">Few Easy Steps and Done</h1>
-				<p className="text-slate-500">
+				<p className="text-muted-foreground">
 					In just few easy step, you are all set to manage your business
 					finances. <br />
 					Manage all expenses with Spend.In all in one place.
 				</p>
 			</div>
 
-			<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-20">
+			<div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 items-center gap-10">
 				{data.map((item, index) => (
 					<div
 						key={index}
-						className="flex flex-col items-center justify-center gap-2 relative">
-						<div className="flex items-center justify-center w-[60px] h-[60px] rounded-full bg-primary absolute top-[-20px] left-[-20px]">
-							<p className="text-white">{item.step}</p>
+						className="flex flex-col items-center justify-center gap-4 relative p-8 rounded-lg bg-card border border-border shadow-lg transform hover:scale-105 transition-transform duration-300">
+						<div className="flex items-center justify-center w-16 h-16 rounded-full bg-primary absolute -top-8">
+							<p className="text-primary-foreground text-2xl font-bold">
+								{item.step}
+							</p>
 						</div>
-						<div className="h-[200px] w-[200px] rounded-lg bg-slate-800"></div>
-						<p className="text-slate-500">{item.title}</p>
+						<div className="h-24 w-24 rounded-lg bg-transparent"></div>
+						<p className="text-lg font-semibold text-foreground">{item.title}</p>
 					</div>
 				))}
 			</div>
 
-			<div className="flex items-center justify-center gap-4">
-				<Button>Get a Free Demo</Button>
-				<Button variant="outline">See Pricing</Button>
+			<div className="flex items-center justify-center gap-4 mt-8">
+				<Button size="lg">Get a Free Demo</Button>
+				<Button variant="outline" size="lg">
+					See Pricing
+				</Button>
 			</div>
 		</div>
 	);

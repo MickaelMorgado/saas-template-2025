@@ -56,3 +56,12 @@ export interface Subscription {
     trial_end?: string;
     prices?: Price;
 }
+
+export interface Lead {
+  id: string;
+  created_at: string;
+  name: string;
+  email: string;
+  company?: string;
+  message?: string;
+}
