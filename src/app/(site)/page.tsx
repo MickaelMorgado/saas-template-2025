@@ -1,53 +1,42 @@
-"use client";
-
-import { useState } from "react";
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import Benefits from "@/sections/Benefits";
 import HowItWorks from "@/sections/HowItWorks";
-import BeamsBackground from "@/components/ui/beams-background";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import Pricing from "@/sections/Pricing";
-import ContactForm from "@/components/ui/ContactForm";
 import Testimonials from "@/sections/Testimonials";
 import WhyUs from "@/sections/WhyUs";
+import Header from "@/sections/Header";
+import getHomepageSections from "@/actions/getHomepageSections";
 
-export default function Home() {
-	const [showContactForm, setShowContactForm] = useState(false);
+export default async function Home() {
+	const sections = await getHomepageSections();
+
+	const getSectionContent = (name: string) => {
+		const section = sections.find((s) => s.title === name);
+		return section ? section : null;
+	};
+
+	const headerContent = getSectionContent("Header");
+	const benefitsContent = getSectionContent("Benefits");
+	const howItWorksContent = getSectionContent("HowItWorks");
+	const whyUsContent = getSectionContent("WhyUs");
+	const testimonialsContent = getSectionContent("Testimonials");
+	const pricingContent = getSectionContent("Pricing");
+	const footerContent = getSectionContent("Footer");
 
 	return (
 		<main>
-			{showContactForm && <ContactForm onClose={() => setShowContactForm(false)} />}
+			{/* {JSON.stringify(sections, null, 2)} */}
 			<div className="px-[100px]">
 				<Navbar />
-				<BeamsBackground>
-					<div className="w-full h-[93vh] flex items-center justify-center flex-col text-center relative gap-6">
-						<h1 className="text-7xl font-bold leading-snug z-10">
-							All your business <br />
-							expenses in one place.
-						</h1>
-						<p className="text-muted-foreground text-xl leading-normal z-10">
-							Your one-stop finance empower platform. <br /> Manage all your business
-							expenses with our supafast app.
-						</p>
-						<div className="flex items-center justify-center gap-6 mb-[50px] z-10">
-							<Button variant="default" onClick={() => setShowContactForm(true)}>
-								Get a Free Demo
-							</Button>
-							<Link href="/#pricing">
-								<Button variant="secondary">See Pricing</Button>
-							</Link>
-						</div>
-					</div>
-				</BeamsBackground>
+				{headerContent && <Header content={headerContent} />}
 			</div>
-			<Benefits />
-			<HowItWorks />
-			<WhyUs />
-			<Testimonials />
-			<Pricing />
-			<Footer />
+			{benefitsContent && <Benefits content={benefitsContent} />}
+			{howItWorksContent && <HowItWorks content={howItWorksContent} />}
+			{whyUsContent && <WhyUs content={whyUsContent} />}
+			{testimonialsContent && <Testimonials content={testimonialsContent} />}
+			{pricingContent && <Pricing content={pricingContent} />}
+			{footerContent && <Footer content={footerContent} />}
 		</main>
 	);
 }

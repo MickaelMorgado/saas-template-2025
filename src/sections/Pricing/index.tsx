@@ -30,7 +30,19 @@ interface Feature {
 	isIncluded: boolean;
 }
 
-const Pricing = () => {
+import { HomepageSection } from "@/types";
+
+interface PricingContent {
+	title: string;
+	description: string;
+	badge: string;
+}
+
+interface PricingProps {
+	content: HomepageSection;
+}
+
+const Pricing = ({ content: sectionContent }: PricingProps) => {
 	const [products, setProducts] = useState<ProductWithPrice[]>([]);
 	const [isYearly, setIsYearly] = useState(true);
 	const [loading, setLoading] = useState(false);
@@ -61,6 +73,12 @@ const Pricing = () => {
 		};
 		fetchProducts();
 	}, []);
+
+	if (!sectionContent || !sectionContent.content) {
+		return null;
+	}
+
+	const { title, content } = sectionContent;
 
 	const getPricingData = (): Pricing[] => {
 		return products.map(product => {
@@ -93,10 +111,11 @@ const Pricing = () => {
 		<div
 			className="flex flex-col items-center justify-center gap-2"
 			id="pricing">
-			<h1 className="text-3xl font-semibold">Ready to Get Started?</h1>
-			<p className="text-[20px]">
-				Choose a plan that suits your business needs
-			</p>
+			<h1 className="text-3xl font-semibold">{title}</h1>
+			<p
+				className="text-[20px]"
+				dangerouslySetInnerHTML={{ __html: content }}
+			/>
 			<div className="flex items-center gap-4 mt-6">
 				<p className="text-[16px] font-medium">Monthly </p>
 				<Switch

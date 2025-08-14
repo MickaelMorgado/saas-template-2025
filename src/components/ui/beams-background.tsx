@@ -100,10 +100,7 @@ export default function BeamsBackground({ className, children, intensity = "stro
       const gradient = ctx.createLinearGradient(0, 0, 0, beam.length)
 
       gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`)
-      gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`)
-      gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`)
-      gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`)
-      gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`)
+      gradient.addColorStop(0.5, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`)
       gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`)
 
       ctx.fillStyle = gradient
@@ -115,7 +112,7 @@ export default function BeamsBackground({ className, children, intensity = "stro
       if (!canvas || !ctx) return
 
       ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.filter = "blur(5px)"
+      //ctx.filter = "blur(5px)"
 
       const totalBeams = beamsRef.current.length
       beamsRef.current.forEach((beam, index) => {
@@ -144,13 +141,14 @@ export default function BeamsBackground({ className, children, intensity = "stro
   }, [intensity])
 
   return (
-    <div className={cn("relative h-screen w-full overflow-hidden bg-neutral-950", className)}>
-      <canvas ref={canvasRef} className="absolute inset-0" style={{ filter: "blur(2px)" }} />
+    <div className={cn("relative h-screen w-full overflow-hidden bg-black", className)}>
+      {/*<canvas ref={canvasRef} className="absolute inset-0" style={{ filter: "blur(2px)" }} />*/}
+      <canvas ref={canvasRef} className="absolute inset-0" />
 
-      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-neutral-950 to-transparent z-5" />
+      <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent z-5" />
 
       <motion.div
-        className="absolute inset-0 bg-neutral-950/5"
+        className="absolute inset-0 bg-black"
         animate={{
           opacity: [0.05, 0.15, 0.05],
         }}
@@ -159,9 +157,11 @@ export default function BeamsBackground({ className, children, intensity = "stro
           ease: "easeInOut",
           repeat: Number.POSITIVE_INFINITY,
         }}
+        /*
         style={{
           backdropFilter: "blur(50px)",
         }}
+        */
       />
 
       <div className="relative z-10 flex h-screen w-full items-center justify-center">

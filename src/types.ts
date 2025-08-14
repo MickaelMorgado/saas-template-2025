@@ -65,3 +65,13 @@ export interface Lead {
   company?: string;
   message?: string;
 }
+
+export interface HomepageSection {
+  id: number;
+  title: string;
+  order: number;
+  content?: string;
+  image_url?: string;
+  cta_text?: string;
+  cta_url?: string;
+}
