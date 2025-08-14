@@ -39,7 +39,7 @@ export interface ProductWithPrice extends Product {
 }
 
 export interface Subscription {
-    id: string;
+    id:string;
     user_id: string;
     status?: Stripe.Subscription.Status;
     metadata?: Stripe.Metadata;

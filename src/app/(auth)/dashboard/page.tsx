@@ -3,6 +3,8 @@
 import React, { useState, useEffect } from "react";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { Database } from "@/../types_db";
 
 type User = {
   id: string;
@@ -142,13 +144,14 @@ const DashboardPage = () => {
   }
 
   return (
-    <main className="p-8 max-w-5xl mx-auto">
+    <main className="p-8">
       <h1 className="text-3xl font-bold mb-6">User Management</h1>
 
       {error && (
         <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">{error}</div>
       )}
 
+      {/* User Management Section */}
       <section className="mb-8">
         <h2 className="text-xl font-semibold mb-2">Create New User</h2>
         <div className="flex flex-col sm:flex-row gap-4">

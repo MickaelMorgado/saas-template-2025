@@ -1,0 +1,5 @@
+id,active,name,description,image,metadata
+prod_1,true,"Basic Plan","Our most basic plan, perfect for getting started.","","{""features"": ""feature1,feature2""}"
+prod_2,true,"Pro Plan","Our most popular plan, with advanced features.","","{""features"": ""feature1,feature2,feature3""}"
+prod_3,true,"Ultimate Plan","The ultimate plan for power users and enterprises.","","{""features"": ""all""}"
+prod_4,false,"Legacy Plan","A retired plan, no longer available for new sign-ups.","","{}"

@@ -1,0 +1,4 @@
+id,user_id,status,price_id,quantity,cancel_at_period_end,created,current_period_start,current_period_end,ended_at,cancel_at,canceled_at,trial_start,trial_end,metadata
+sub_1,8a8d8e0f-8e8e-8e8e-8e8e-8e8e8e8e8e8e,active,price_1,1,false,"2023-01-15T10:00:00Z","2023-01-15T10:00:00Z","2023-02-15T10:00:00Z",,,"",,,"{}"
+sub_2,4f4g4h4i-4j4k-4l4m-4n4o-4p4q4r4s4t4u,trialing,price_3,1,false,"2023-01-20T12:00:00Z","2023-01-20T12:00:00Z","2023-02-20T12:00:00Z",,,"","2023-01-20T12:00:00Z","2023-02-03T12:00:00Z","{}"
+sub_3,9b9c9d9e-9f9g-9h9i-9j9k-9l9m9n9o9p9q,canceled,price_5,1,true,"2022-12-01T08:30:00Z","2023-01-01T08:30:00Z","2023-02-01T08:30:00Z",,"2023-02-01T08:30:00Z","2023-01-25T14:00:00Z",,,"{}"
