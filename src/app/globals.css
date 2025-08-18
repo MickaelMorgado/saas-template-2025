@@ -61,3 +61,8 @@
 html {
 	scroll-behavior: smooth;
 }
+
+.is-active {
+	background-color: hsl(var(--primary));
+	color: hsl(var(--primary-foreground));
+}
