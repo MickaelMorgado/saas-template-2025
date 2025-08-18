@@ -1,13 +1,5 @@
-import Stripe from 'stripe';
 import { NextResponse } from 'next/server';
-import { headers } from 'next/headers';
 
-import { stripe } from '../../../lib/stripe';
-import {
-    upsertProductRecord,
-    upsertPriceRecord,
-    manageSubscriptionStatusChange
-} from "../../../lib/supabaseAdmin";
 
 const relevantEvents = new Set([
     'product.created',
@@ -23,6 +15,8 @@ const relevantEvents = new Set([
 export async function POST(
     request: Request
 ) {
+    return NextResponse.json({ received: true }, { status: 200 });
+    /*
     const body = await request.text()
     const sig = headers().get('Stripe-Signature');
 
@@ -82,4 +76,5 @@ export async function POST(
     }
 
     return NextResponse.json({ received: true }, { status: 200 });
+    */
 };
