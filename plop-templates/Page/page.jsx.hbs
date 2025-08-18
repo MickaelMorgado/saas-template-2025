@@ -1,0 +1,18 @@
+import { Breadcrumbs } from "~/components/Breadcrumbs";
+import { Locale } from "~/i18n.config";
+import { Title, TitleVariants } from "~/components/Title";
+import { Container } from "~/components/Container";
+
+export default async function {{ pascalCase name }}({
+  params,
+}: Readonly<{ params: Promise<{ lang: Locale }> }>) {
+  const { lang } = await params;
+  return (
+    <Container>
+      <Breadcrumbs />
+      <Title titleVariant={TitleVariants.H1} extraClasses="mt-10">
+        {{ kebabCase name }}
+      </Title>
+    </Container>
+  );
+}

@@ -1,9 +1,9 @@
 "use client";
 
-import React from "react";
+import { BarChart, FileText, List, Users } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Users, BarChart, FileText, List } from "lucide-react";
+import React from "react";
 
 const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -13,7 +13,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
     { href: "/dashboard/price-plans", label: "Price Plans", icon: BarChart },
     {
       href: "/dashboard/pages",
-      label: "Pages Content Editor",
+      label: "Pages",
       icon: FileText,
     },
     { href: "/dashboard/leads", label: "Leads", icon: List },

@@ -7,13 +7,51 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instantiate createClient with right options
-  // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
-  __InternalSupabase: {
-    PostgrestVersion: "13.0.4"
+  graphql_public: {
+    Tables: {
+      [_ in never]: never
+    }
+    Views: {
+      [_ in never]: never
+    }
+    Functions: {
+      graphql: {
+        Args: {
+          extensions?: Json
+          operationName?: string
+          query?: string
+          variables?: Json
+        }
+        Returns: Json
+      }
+    }
+    Enums: {
+      [_ in never]: never
+    }
+    CompositeTypes: {
+      [_ in never]: never
+    }
   }
   public: {
     Tables: {
+      admin_settings: {
+        Row: {
+          id: number
+          setting_name: string
+          setting_value: Json | null
+        }
+        Insert: {
+          id?: never
+          setting_name: string
+          setting_value?: Json | null
+        }
+        Update: {
+          id?: never
+          setting_name?: string
+          setting_value?: Json | null
+        }
+        Relationships: []
+      }
       homepage_sections: {
         Row: {
           content: string | null
@@ -65,6 +103,74 @@ export type Database = {
           email?: string | null
           message?: string | null
           name?: string | null
+        }
+        Relationships: []
+      }
+      page_sections: {
+        Row: {
+          content: string | null
+          created_at: string
+          cta_text: string | null
+          cta_url: string | null
+          id: string
+          image_url: string | null
+          order: number
+          page_id: string | null
+          title: string
+        }
+        Insert: {
+          content?: string | null
+          created_at?: string
+          cta_text?: string | null
+          cta_url?: string | null
+          id?: string
+          image_url?: string | null
+          order: number
+          page_id?: string | null
+          title: string
+        }
+        Update: {
+          content?: string | null
+          created_at?: string
+          cta_text?: string | null
+          cta_url?: string | null
+          id?: string
+          image_url?: string | null
+          order?: number
+          page_id?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "page_sections_page_id_fkey"
+            columns: ["page_id"]
+            isOneToOne: false
+            referencedRelation: "pages"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      pages: {
+        Row: {
+          created_at: string
+          id: string
+          is_published: boolean | null
+          slug: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_published?: boolean | null
+          slug: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_published?: boolean | null
+          slug?: string
+          title?: string
         }
         Relationships: []
       }
@@ -207,12 +313,41 @@ export type Database = {
           },
         ]
       }
+      user_roles: {
+        Row: {
+          created_at: string | null
+          is_admin: boolean
+          user_id: string
+        }
+        Insert: {
+          created_at?: string | null
+          is_admin?: boolean
+          user_id: string
+        }
+        Update: {
+          created_at?: string | null
+          is_admin?: boolean
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      add_admin_role: {
+        Args: { admin_email: string }
+        Returns: undefined
+      }
+      is_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: boolean
+      }
+      remove_admin_role: {
+        Args: { admin_email: string }
+        Returns: undefined
+      }
     }
     Enums: {
       [_ in never]: never
@@ -341,7 +476,11 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
+  graphql_public: {
+    Enums: {},
+  },
   public: {
     Enums: {},
   },
 } as const
+
