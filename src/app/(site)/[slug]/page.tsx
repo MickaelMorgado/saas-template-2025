@@ -1,17 +1,15 @@
 import { getPublishedPageBySlug } from "@/actions/cms";
 import { Tables } from "@/types_db";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 
 type PageSection = Tables<"page_sections">;
 
-interface PageProps {
-  params: {
-    slug: string;
-  };
-}
-
-const DynamicPage = async ({ params }: PageProps) => {
-  const page = await getPublishedPageBySlug(params.slug);
+const DynamicPage = async ({
+  params,
+}: Readonly<{ params: Promise<{ slug: string }> }>) => {
+  const { slug } = await params;
+  const page = await getPublishedPageBySlug(slug);
 
   if (!page) {
     notFound();
@@ -24,7 +22,7 @@ const DynamicPage = async ({ params }: PageProps) => {
         <section key={section.id} className="mb-12">
           <h2 className="text-2xl font-semibold mb-4">{section.title}</h2>
           {section.image_url && (
-            <img
+            <Image
               src={section.image_url}
               alt={section.title}
               className="mb-4 rounded-lg"
